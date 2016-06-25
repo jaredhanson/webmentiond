@@ -1,4 +1,4 @@
-exports = module.exports = function() {
+exports = module.exports = function(server) {
   
   function logIt(req, res, next) {
     console.log(req.headers);
@@ -6,8 +6,11 @@ exports = module.exports = function() {
     next();
   }
   
-  function respond(req, res, next) {
-    res.status(202).send('http://alice.host/webmentions/222')
+  function handle(req, res, next) {
+    server.ping(req.body.source, req.body.target, function(err) {
+      // TODO: handle errors
+      res.status(202).send('http://alice.host/webmentions/222')
+    });
   }
   
   // curl --data "source=http://bob.host/post-by-bob&target=http://alice.host/post-by-alice" http://127.0.0.1:8080/
@@ -15,8 +18,10 @@ exports = module.exports = function() {
   return [
     require('body-parser').urlencoded({ extended: false }),
     logIt,
-    respond
+    handle
   ];
 }
 
-exports['@require'] = [];
+exports['@require'] = [
+  'http://schemas.jaredhanson.me/js/social/linkback/Server'
+];
