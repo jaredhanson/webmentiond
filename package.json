@@ -7,7 +7,8 @@
     "bixby-express": "^0.1.1",
     "bixby-http": "^0.1.0",
     "body-parser": "^1.15.2",
-    "morgan": "^1.6.1"
+    "morgan": "^1.6.1",
+    "nodex-social-linkback": "0.0.1"
   },
   "devDependencies": {
     "mocha": "~1.15.0",
